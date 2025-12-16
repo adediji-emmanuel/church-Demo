@@ -1,0 +1,809 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>RLCC — Admin Dashboard</title>
+
+  <!-- favicon (same as site) -->
+  <link rel="shortcut icon" href="https://riversoflovechristiancentre.org/logo.png" type="image/x-icon">
+
+  <!-- Bootstrap CSS -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+
+  <!-- Font Awesome -->
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+
+  <!-- Google Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&display=swap" rel="stylesheet">
+
+  <style>
+    :root{ --bg:#061018; --muted:#ffffff99; --accent:#4AE66E; }
+    html,body{ height:100%; margin:0; font-family:'Poppins',sans-serif; background:linear-gradient(180deg,#061018 0%, #0b0b0b 100%); color:#fff; }
+    .container-app{ padding:18px; max-width:1200px; margin:0 auto; }
+    .brand{ display:flex; align-items:center; gap:12px; font-weight:700; }
+    .brand img{ width:48px;height:48px;border-radius:8px;object-fit:cover;background:#ffffff10; }
+    .panel{ background: linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01)); border-radius:12px; padding:14px; border:1px solid rgba(255,255,255,0.03); }
+    .layout{ display:grid; grid-template-columns: 1fr 380px; gap:18px; align-items:start; }
+    @media (max-width:991px){ .layout{ grid-template-columns:1fr; } }
+    .small-muted{ color:var(--muted); font-size:13px; }
+    .chip{ background:rgba(255,255,255,0.03); padding:6px 10px; border-radius:999px; border:1px solid rgba(255,255,255,0.02); color:var(--muted); display:inline-block; }
+    .btn-accent{ background:var(--accent); color:#041006; border:none; border-radius:8px; padding:8px 12px; font-weight:600; }
+    .stat-card{ border-radius:10px; padding:12px; background:rgba(255,255,255,0.02); border:1px solid rgba(255,255,255,0.03); }
+    .form-floating .form-control, .form-control{ background:transparent; color:inherit; border:1px solid rgba(255,255,255,0.06); border-radius:8px; }
+    label{ font-weight:600; }
+    .list-item{ border-radius:8px; padding:8px; display:flex; gap:10px; align-items:center; justify-content:space-between; background:#000; border:1px solid rgba(255,255,255,0.03); }
+    .thumb{ width:110px; height:64px; background:#111; border-radius:6px; background-size:cover; background-position:center; flex-shrink:0; }
+    .muted{ color:var(--muted); }
+    .activity-item{ border-left:3px solid rgba(255,255,255,0.04); padding-left:10px; margin-bottom:8px; }
+    .danger-btn{ background:transparent; border:1px solid rgba(255,255,255,0.06); color:#ff8080; border-radius:6px; padding:6px 8px; }
+    .success-btn{ background:transparent; border:1px solid rgba(255,255,255,0.06); color:#7fff9a; border-radius:6px; padding:6px 8px; }
+    .search-input { background: rgba(255,255,255,0.02); border-radius:8px; padding:6px 8px; display:flex; gap:8px; align-items:center; }
+    .small-note{ font-size:12px; color:var(--muted); }
+    .mb-8 { margin-bottom:8px; }
+
+
+
+
+
+    /* MOBILE OPTIMIZATIONS */
+@media (max-width: 991px) {
+  .layout {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+  }
+
+  aside {
+    order: -1; /* show right sidebar on top for mobile */
+  }
+
+  .search-input {
+    min-width: 100% !important;
+    margin-bottom: 8px;
+  }
+
+  .panel {
+    padding: 12px;
+    transition: all 0.3s ease;
+  }
+
+  .list-item {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 8px;
+  }
+
+  .list-item > div:last-child {
+    width: 100%;
+    display: flex;
+    justify-content: flex-start;
+    gap: 6px;
+  }
+
+  .stat-card {
+    padding: 10px;
+    font-size: 14px;
+  }
+
+  .form-floating .form-control, .form-control {
+    font-size: 14px;
+  }
+
+  #globalSearch {
+    width: 100%;
+  }
+
+  button.btn-accent {
+    font-size: 14px;
+    padding: 6px 10px;
+  }
+
+  .thumb {
+    width: 100%;
+    height: 160px;
+    border-radius: 8px;
+    background-size: cover;
+    background-position: center;
+  }
+}
+
+/* SMOOTH TRANSITIONS */
+.panel, .list-item, .stat-card, .form-control {
+  transition: all 0.3s ease-in-out;
+}
+
+/* OPTIONAL: animated hover effect for panels */
+.panel:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 2px 12px rgba(0,0,0,0.3);
+}
+
+/* COLLAPSIBLE PANELS FOR MOBILE */
+@media (max-width: 768px) {
+  .panel-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    cursor: pointer;
+  }
+  .panel-body {
+    display: none;
+  }
+  .panel.active .panel-body {
+    display: block;
+  }
+}
+
+  </style>
+</head>
+<body>
+  <div class="container-app">
+    <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:12px;">
+      <div class="brand">
+        <img id="brand-logo" src="https://riversoflovechristiancentre.org/logo.png" alt="logo">
+        <div>
+          <div id="site-title" style="font-weight:700">RLCC — Admin</div>
+          <div class="small-muted">Manage sermons, clips & live stream</div>
+        </div>
+      </div>
+
+      <div style="display:flex;gap:10px;align-items:center;">
+        <div class="search-input" style="min-width:260px;">
+          <i class="fas fa-search muted"></i>
+          <input id="globalSearch" class="form-control bg-transparent border-0" placeholder="Search sermons or preachers...">
+          <button class="btn btn-sm btn-outline-light" id="clearSearch"><i class="fas fa-times"></i></button>
+        </div>
+        <button class="btn btn-outline-light" id="refreshBtn"><i class="fas fa-sync"></i> Refresh</button>
+        <a href="sermons.html" class="btn btn-outline-light"><i class="fas fa-eye"></i> View site</a>
+      </div>
+    </div>
+
+    <div class="layout">
+      <!-- LEFT: main controls -->
+      <main>
+        <!-- DASHBOARD STATS -->
+        <div class="panel mb-3">
+          <div style="display:flex;justify-content:space-between;align-items:center;">
+            <div>
+              <div style="font-weight:700">Dashboard</div>
+              <div class="small-muted">Recent activity & quick stats</div>
+            </div>
+            <div style="display:flex;gap:8px;align-items:center;">
+              <div class="chip" id="liveStatusChip">Live: —</div>
+              <div class="chip" id="pinnedChip">Pinned: —</div>
+            </div>
+          </div>
+
+          <hr style="border-top:1px solid rgba(255,255,255,0.03)">
+
+          <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:10px;">
+            <div class="stat-card text-center">
+              <div class="muted">Total Sermons</div>
+              <div id="statSermons" style="font-weight:700;font-size:20px">0</div>
+            </div>
+            <div class="stat-card text-center">
+              <div class="muted">Total Clips</div>
+              <div id="statClips" style="font-weight:700;font-size:20px">0</div>
+            </div>
+            <div class="stat-card text-center">
+              <div class="muted">Uploads (This week)</div>
+              <div id="statWeek" style="font-weight:700;font-size:20px">0</div>
+            </div>
+          </div>
+
+          <div style="margin-top:12px;">
+            <div style="font-weight:700;margin-bottom:8px;">Activity Feed</div>
+            <div id="activityFeed"></div>
+          </div>
+        </div>
+
+        <!-- FORMS -->
+        <div class="panel mb-3">
+          <div style="display:flex;justify-content:space-between;align-items:center;">
+            <div style="font-weight:700">Add / Edit Sermon</div>
+            <div class="small-muted">Fill the form and click Save</div>
+          </div>
+
+          <hr style="border-top:1px solid rgba(255,255,255,0.03)">
+
+          <form id="sermonForm">
+            <input type="hidden" id="sermonId">
+            <div class="row g-2">
+              <div class="col-md-6">
+                <label class="small-muted">Title</label>
+                <input id="sermonTitle" class="form-control" required>
+              </div>
+              <div class="col-md-6">
+                <label class="small-muted">Preacher</label>
+                <input id="sermonPreacher" class="form-control">
+              </div>
+              <div class="col-md-4">
+                <label class="small-muted">Date</label>
+                <input id="sermonDate" type="date" class="form-control">
+              </div>
+              <div class="col-md-4">
+                <label class="small-muted">Category</label>
+                <select id="sermonCategory" class="form-control">
+                  <option value="sunday">Sunday</option>
+                  <option value="midweek">Midweek</option>
+                  <option value="youth">Youth</option>
+                  <option value="events">Events</option>
+                </select>
+              </div>
+              <div class="col-md-4">
+                <label class="small-muted">YouTube Video ID</label>
+                <input id="sermonYouTubeId" class="form-control" placeholder="e.g. hPI_Oc0qe7w">
+              </div>
+
+              <div class="col-12">
+                <label class="small-muted">Description</label>
+                <textarea id="sermonDesc" rows="2" class="form-control"></textarea>
+              </div>
+
+              <div class="col-md-8">
+                <label class="small-muted">Thumbnail URL (optional)</label>
+                <input id="sermonThumb" class="form-control" placeholder="If empty, will try YouTube thumbnail">
+                <div class="small-note mt-1">Tip: leave empty to auto-fill from YouTube thumbnail.</div>
+              </div>
+
+              <div class="col-md-4 d-flex align-items-end">
+                <button class="btn-accent w-100" type="submit" id="saveSermonBtn"><i class="fas fa-save"></i> Save Sermon</button>
+              </div>
+            </div>
+          </form>
+        </div>
+
+        <!-- CLIP FORM -->
+        <div class="panel mb-3">
+          <div style="display:flex;justify-content:space-between;align-items:center;">
+            <div style="font-weight:700">Add Clip</div>
+            <div class="small-muted">Short clips for highlights</div>
+          </div>
+
+          <hr style="border-top:1px solid rgba(255,255,255,0.03)">
+
+          <form id="clipForm" class="row g-2">
+            <input type="hidden" id="clipId">
+            <div class="col-md-6">
+              <label class="small-muted">Title</label>
+              <input id="clipTitle" class="form-control" required>
+            </div>
+            <div class="col-md-6">
+              <label class="small-muted">YouTube ID</label>
+              <input id="clipYouTubeId" class="form-control" placeholder="e.g. hPI_Oc0qe7w" required>
+            </div>
+            <div class="col-md-8">
+              <label class="small-muted">Thumbnail URL (optional)</label>
+              <input id="clipThumb" class="form-control">
+              <div class="small-note mt-1">Tip: leave empty to auto-fill from YouTube thumbnail.</div>
+            </div>
+            <div class="col-md-4 d-flex align-items-end">
+              <button class="btn-accent w-100" type="submit"><i class="fas fa-plus"></i> Add Clip</button>
+            </div>
+          </form>
+        </div>
+
+        <!-- PINNED / LIVE -->
+        <div class="panel mb-3">
+          <div style="display:flex;justify-content:space-between;align-items:center;">
+            <div style="font-weight:700">Pinned Message & Live</div>
+            <div class="small-muted">Set what's shown on the main page</div>
+          </div>
+
+          <hr style="border-top:1px solid rgba(255,255,255,0.03)">
+
+          <form id="pinnedForm" class="row g-2">
+            <div class="col-md-6">
+              <label class="small-muted">Pinned Title</label>
+              <input id="pinnedTitle" class="form-control">
+            </div>
+            <div class="col-md-6">
+              <label class="small-muted">Pinned Preacher</label>
+              <input id="pinnedPreacher" class="form-control">
+            </div>
+            <div class="col-md-4">
+              <label class="small-muted">Pinned Date</label>
+              <input id="pinnedDate" type="date" class="form-control">
+            </div>
+            <div class="col-md-8">
+              <label class="small-muted">Pinned Description</label>
+              <input id="pinnedDesc" class="form-control">
+            </div>
+            <div class="col-md-6">
+              <label class="small-muted">Pinned YouTube ID</label>
+              <input id="pinnedYouTubeId" class="form-control" placeholder="Video ID">
+            </div>
+            <div class="col-md-6 d-flex align-items-end">
+              <button class="btn-accent w-100" id="savePinnedBtn" type="button"><i class="fas fa-thumbtack"></i> Save Pinned</button>
+            </div>
+          </form>
+
+          <hr style="border-top:1px solid rgba(255,255,255,0.03)">
+
+          <div class="small-muted">Live / Current stream</div>
+          <div class="row g-2 mt-2">
+            <div class="col-md-6">
+              <input id="liveVideoId" class="form-control" placeholder="Current live video ID">
+            </div>
+            <div class="col-md-6 d-flex align-items-end">
+              <button class="btn btn-outline-light w-100" id="saveLiveBtn"><i class="fab fa-youtube"></i> Update Live ID</button>
+            </div>
+          </div>
+        </div>
+
+        <!-- SERMONS LIST -->
+        <div class="panel mb-3">
+          <div style="display:flex;justify-content:space-between;align-items:center;">
+            <div style="font-weight:700">All Sermons</div>
+            <div class="small-muted">Edit or delete</div>
+          </div>
+
+          <hr style="border-top:1px solid rgba(255,255,255,0.03)">
+
+          <div id="sermonsList"></div>
+          <div class="text-center mt-3"><button class="btn btn-outline-light" id="exportBtn"><i class="fas fa-download"></i> Export JSON</button></div>
+        </div>
+
+      </main>
+
+      <!-- RIGHT: quick lists + settings -->
+      <aside>
+        <div class="panel mb-3">
+          <div style="display:flex;justify-content:space-between;align-items:center;">
+            <div style="font-weight:700">Quick Actions</div>
+            <div class="small-muted">Admin tools</div>
+          </div>
+          <hr style="border-top:1px solid rgba(255,255,255,0.03)">
+          <div style="display:flex;flex-direction:column;gap:8px;">
+            <button class="btn btn-outline-light" id="loadRemoteBtn"><i class="fas fa-download"></i> Reload admin-data.json</button>
+            <button class="btn btn-outline-light" id="clearLocalBtn"><i class="fas fa-trash"></i> Clear local override</button>
+            <button class="btn btn-outline-light" id="purgeActivityBtn"><i class="fas fa-broom"></i> Clear activity log</button>
+          </div>
+          <hr style="border-top:1px solid rgba(255,255,255,0.03)">
+          <div>
+            <div class="small-muted mb-2">Backend (optional)</div>
+            <div class="small-note">To make writes actually modify the remote JSON file you must configure a backend. Supported out-of-the-box: JSONBin v3. See below.</div>
+
+            <div style="margin-top:8px;">
+              <label class="small-muted">JSONBin Bin ID</label>
+              <input id="jsonbinId" class="form-control mb-1" placeholder="BIN_ID (optional)">
+              <label class="small-muted">JSONBin Master Key</label>
+              <input id="jsonbinKey" class="form-control mb-1" placeholder="X-Master-Key (optional)">
+              <div class="small-note">Leave empty to use localStorage + attempt local PUT to admin-data.json (server must support it).</div>
+            </div>
+
+            <div class="mt-2 d-grid gap-2">
+              <button class="btn btn-outline-light" id="saveBackendBtn">Save Backend Settings</button>
+            </div>
+          </div>
+        </div>
+
+        <div class="panel mb-3">
+          <div style="font-weight:700">Clips</div>
+          <hr style="border-top:1px solid rgba(255,255,255,0.03)">
+          <div id="clipsList"></div>
+        </div>
+
+        <div class="panel">
+          <div style="font-weight:700">Notes</div>
+          <hr style="border-top:1px solid rgba(255,255,255,0.03)">
+          <div class="small-note">
+            - When you save, the page will try to write to the configured backend.<br>
+            - If backend not configured it will try to PUT to ./admin-data.json (works only on servers that accept overwrites).<br>
+            - A local override is always stored (localStorage) so your site shows the latest data instantly.<br>
+            - To make updates permanent on GitHub-hosted sites use JSONBin or a lightweight server.
+          </div>
+        </div>
+      </aside>
+    </div>
+  </div>
+  
+
+  <!-- Toast placeholder -->
+  <div id="toastWrap" style="position:fixed;right:16px;bottom:16px;z-index:9999"></div>
+
+  <!-- Bootstrap JS -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+
+  <script>
+    // -------------------- LOGIN CHECK --------------------
+// Redirect to login page if no user is logged in
+const loggedInUser = JSON.parse(localStorage.getItem('loggedInUser'));
+if (!loggedInUser) {
+    alert('Please login first!');
+    window.location.href = './Credentials/index.html';
+}
+
+
+
+
+
+  /***********************************************************************
+   Admin dashboard JS
+   - Saves to JSONBin if configured (recommended)
+   - Else tries PUT to admin-data.json (only works if your server allows)
+   - Always saves a local override in localStorage under 'rlcc_admin_data_override'
+  ************************************************************************/
+
+  const DATA_FILE = 'admin-data.json'; // original file path
+  const LOCAL_OVERRIDE_KEY = 'rlcc_admin_data_override';
+  const ACTIVITY_KEY = 'rlcc_admin_activity';
+
+  // Backend config (optional) — user can set via UI
+  let BACKEND = {
+    type: 'jsonbin', // only 'jsonbin' implemented below. If empty, fallback to local PUT.
+    binId: '693c476fd0ea881f4024c700',       // set via UI
+    masterKey: '$2a$10$qtoZhFMZ4JANryBb2s7LpOrnC2KpW0MIGpSvWVJxp1t7ta94N9SSO'    // set via UI (X-Master-Key)
+  };
+
+  // Short DOM helpers
+  const $ = (s,root=document)=> root.querySelector(s);
+  const $$ = (s,root=document)=> Array.from(root.querySelectorAll(s));
+  function el(tag, attrs={}, children=''){ const e=document.createElement(tag); for(const k in attrs) e.setAttribute(k, attrs[k]); if(typeof children === 'string') e.innerHTML = children; else if(Array.isArray(children)) children.forEach(c=> e.appendChild(c)); return e; }
+  function showToast(msg, type='info'){ const t = el('div',{class:'panel mb-2', style:'min-width:220px;padding:10px;border-left:4px solid rgba(0,0,0,0)'}, msg); t.style.background='rgba(0,0,0,0.6)'; t.style.borderLeftColor = (type==='success')? '#4AE66E' : (type==='danger'?'#ff6b6b':'#999'); document.getElementById('toastWrap').appendChild(t); setTimeout(()=> t.remove(), 4200); }
+
+  // Activity logging
+  function logActivity(action, itemType, itemTitle){
+    const act = JSON.parse(localStorage.getItem(ACTIVITY_KEY)||'[]');
+    act.unshift({ time: Date.now(), action, itemType, title: itemTitle });
+    localStorage.setItem(ACTIVITY_KEY, JSON.stringify(act.slice(0,200)));
+    renderActivity();
+  }
+  function renderActivity(){
+    const feed = $('#activityFeed'); feed.innerHTML = '';
+    const list = JSON.parse(localStorage.getItem(ACTIVITY_KEY)||'[]');
+    if(list.length === 0){ feed.innerHTML = '<div class="small-muted">No activity yet</div>'; return; }
+    list.slice(0,8).forEach(a=>{
+      const d = new Date(a.time); const timeStr = d.toLocaleString();
+      const elNode = el('div', {class:'activity-item'}, `<div style="font-weight:700">${a.action} <span class="muted" style="font-weight:600">(${a.itemType})</span></div><div class="muted small">${a.title}</div><div class="small-muted">${timeStr}</div>`);
+      feed.appendChild(elNode);
+    });
+  }
+
+  // Utilities
+  function uid(prefix='x'){ return prefix + Math.random().toString(36).slice(2,9); }
+  function youtubeThumbFromId(id){ if(!id) return ''; return `https://img.youtube.com/vi/${id}/maxresdefault.jpg`; }
+  function todayISO(){ return new Date().toISOString().split('T')[0]; }
+
+  // APP state
+  let APP = { data: null };
+
+  /***********************
+   LOAD DATA (with override)
+  ************************/
+  async function loadAdminData(){
+    try{
+      // Attempt fetch of admin-data.json
+      const r = await fetch(DATA_FILE + '?v=' + Date.now());
+      if(!r.ok) throw new Error('Could not fetch admin-data.json');
+      const json = await r.json();
+      APP.data = json;
+    }catch(e){
+      // fallback to minimal object if fetch fails
+      console.warn('Could not load admin-data.json', e);
+      APP.data = { site: { title: 'RLCC — Sermons', subtitle:'Praise & Worship • Live & Recorded', logo: 'https://riversoflovechristiancentre.org/logo.png' }, pinned: {}, clips: [], sermons: [] };
+      showToast('Could not load admin-data.json from server. Using empty data.', 'danger');
+    }
+
+    // apply local override if exists
+    const override = localStorage.getItem(LOCAL_OVERRIDE_KEY);
+    if(override){
+      try{
+        const ov = JSON.parse(override);
+        APP.data = ov;
+        showToast('Loaded local override (unsaved to remote).', 'info');
+      }catch(e){}
+    }
+
+    // UI bind
+    $('#site-title').textContent = (APP.data.site && APP.data.site.title) ? APP.data.site.title : 'RLCC — Admin';
+    $('#brand-logo').src = (APP.data.site && APP.data.site.logo) ? APP.data.site.logo : 'https://riversoflovechristiancentre.org/logo.png';
+    // Fill forms for pinned
+    if(APP.data.pinned){
+      $('#pinnedTitle').value = APP.data.pinned.title || '';
+      $('#pinnedPreacher').value = APP.data.pinned.preacher || '';
+      $('#pinnedDate').value = APP.data.pinned.date ? APP.data.pinned.date.split('T')[0] : '';
+      $('#pinnedDesc').value = APP.data.pinned.desc || '';
+      $('#pinnedYouTubeId').value = APP.data.pinned.youtubeId || '';
+    }
+
+    renderAll();
+    renderActivity();
+  }
+
+  /***********************
+   RENDERERS
+  ************************/
+  function renderAll(){
+    renderStats();
+    renderLists();
+    renderClips();
+    renderSermonsList();
+  }
+
+  function renderStats(){
+    const sermonsCount = (APP.data.sermons||[]).length;
+    const clipsCount = (APP.data.clips||[]).length;
+    $('#statSermons').textContent = sermonsCount;
+    $('#statClips').textContent = clipsCount;
+
+    // This week uploads
+    const weekAgo = Date.now() - (7*24*60*60*1000);
+    const weekCount = (APP.data.sermons||[]).filter(s => new Date(s.date).getTime() > weekAgo ).length;
+    $('#statWeek').textContent = weekCount;
+
+    // live status
+    const liveId = (APP.data.pinned && APP.data.pinned.youtubeId) || '';
+    $('#liveStatusChip').textContent = liveId ? 'Live: ' + liveId : 'Live: —';
+    $('#pinnedChip').textContent = APP.data.pinned && APP.data.pinned.title ? 'Pinned: ' + APP.data.pinned.title : 'Pinned: —';
+  }
+
+  function renderActivityCompact(){
+    // small helper for right-side quick activity (optional)
+  }
+
+  function renderLists(){
+    // nothing for now (kept for extension)
+  }
+
+  function renderClips(){
+    const wrap = $('#clipsList'); wrap.innerHTML = '';
+    (APP.data.clips||[]).forEach(c=>{
+      const row = el('div', {class:'list-item mb-2'}, '');
+      row.innerHTML = `
+        <div style="display:flex;gap:10px;align-items:center;flex:1">
+          <div class="thumb" style="background-image:url('${c.thumb || youtubeThumbFromId(c.youtubeId) || ''}')"></div>
+          <div style="flex:1">
+            <div style="font-weight:700">${c.title}</div>
+            <div class="muted small">${c.youtubeId || ''}</div>
+          </div>
+        </div>
+        <div style="display:flex;gap:8px;align-items:center">
+          <button class="btn btn-sm btn-outline-light" data-action="play-clip" data-id="${c.id}"><i class="fas fa-play"></i></button>
+          <button class="btn btn-sm btn-outline-light" data-action="del-clip" data-id="${c.id}"><i class="fas fa-trash"></i></button>
+        </div>
+      `;
+      wrap.appendChild(row);
+    });
+  }
+
+  function renderSermonsList(){
+    const wrap = $('#sermonsList'); wrap.innerHTML = '';
+    (APP.data.sermons||[]).forEach(s=>{
+      const row = el('div', {class:'list-item mb-2'}, '');
+      row.innerHTML = `
+        <div style="display:flex;gap:10px;align-items:center;flex:1">
+          <div class="thumb" style="background-image:url('${s.thumb || youtubeThumbFromId(s.youtubeId) || ''}')"></div>
+          <div style="flex:1">
+            <div style="font-weight:700">${s.title}</div>
+            <div class="muted small">${s.preacher || ''} • ${new Date(s.date).toLocaleDateString()}</div>
+          </div>
+        </div>
+        <div style="display:flex;gap:6px;align-items:center">
+          <button class="btn btn-sm btn-outline-light" data-action="edit-sermon" data-id="${s.id}"><i class="fas fa-edit"></i></button>
+          <button class="btn btn-sm btn-outline-light" data-action="del-sermon" data-id="${s.id}"><i class="fas fa-trash"></i></button>
+        </div>
+      `;
+      wrap.appendChild(row);
+    });
+  }
+
+  /***********************
+   FORM HANDLERS
+  ************************/
+  // Save Sermon
+  $('#sermonForm').addEventListener('submit', async (ev)=>{
+    ev.preventDefault();
+    const id = $('#sermonId').value || uid('s');
+    const title = $('#sermonTitle').value.trim();
+    const preacher = $('#sermonPreacher').value.trim();
+    const date = $('#sermonDate').value || todayISO();
+    const category = $('#sermonCategory').value;
+    const youtubeId = $('#sermonYouTubeId').value.trim();
+    let thumb = $('#sermonThumb').value.trim();
+    const desc = $('#sermonDesc').value.trim();
+
+    if(!title || !youtubeId){ showToast('Title and YouTube ID are required', 'danger'); return; }
+
+    if(!thumb && youtubeId) thumb = youtubeThumbFromId(youtubeId);
+
+    // find existing
+    APP.data.sermons = APP.data.sermons || [];
+    const idx = APP.data.sermons.findIndex(x => x.id === id);
+    const entry = { id, title, preacher, date, category, desc, youtubeId, thumb };
+    if(idx >= 0) APP.data.sermons[idx] = entry;
+    else APP.data.sermons.unshift(entry);
+
+    await persistData('save-sermon', entry);
+    // reset form
+    $('#sermonForm').reset();
+    $('#sermonId').value = '';
+  });
+
+  // Add Clip
+  $('#clipForm').addEventListener('submit', async (ev)=>{
+    ev.preventDefault();
+    const id = $('#clipId').value || uid('c');
+    const title = $('#clipTitle').value.trim();
+    const youtubeId = $('#clipYouTubeId').value.trim();
+    let thumb = $('#clipThumb').value.trim();
+    if(!title || !youtubeId){ showToast('Clip title and YouTube ID required', 'danger'); return; }
+    if(!thumb && youtubeId) thumb = youtubeThumbFromId(youtubeId);
+
+    APP.data.clips = APP.data.clips || [];
+    const entry = { id, title, youtubeId, thumb };
+    APP.data.clips.unshift(entry);
+    await persistData('add-clip', entry);
+    $('#clipForm').reset();
+  });
+
+  // Save pinned
+  $('#savePinnedBtn').addEventListener('click', async ()=>{
+    APP.data.pinned = APP.data.pinned || {};
+    APP.data.pinned.title = $('#pinnedTitle').value.trim();
+    APP.data.pinned.preacher = $('#pinnedPreacher').value.trim();
+    APP.data.pinned.date = $('#pinnedDate').value || todayISO();
+    APP.data.pinned.desc = $('#pinnedDesc').value.trim();
+    APP.data.pinned.youtubeId = $('#pinnedYouTubeId').value.trim();
+    if(APP.data.pinned.youtubeId && (!APP.data.pinned.thumb || APP.data.pinned.thumb.length === 0)) APP.data.pinned.thumb = youtubeThumbFromId(APP.data.pinned.youtubeId);
+    await persistData('save-pinned', APP.data.pinned);
+  });
+
+  // Save live only
+  $('#saveLiveBtn').addEventListener('click', async ()=>{
+    const id = $('#liveVideoId').value.trim();
+    APP.data.pinned = APP.data.pinned || {};
+    APP.data.pinned.youtubeId = id;
+    if(id && (!APP.data.pinned.thumb || APP.data.pinned.thumb.length === 0)) APP.data.pinned.thumb = youtubeThumbFromId(id);
+    await persistData('update-live', { youtubeId: id });
+  });
+
+  // Quick UI actions
+  $('#refreshBtn').addEventListener('click', loadAdminData);
+  $('#loadRemoteBtn').addEventListener('click', ()=>{ localStorage.removeItem(LOCAL_OVERRIDE_KEY); showToast('Cleared local override and reloading remote'); loadAdminData(); });
+  $('#clearLocalBtn').addEventListener('click', ()=>{ localStorage.removeItem(LOCAL_OVERRIDE_KEY); showToast('Local override cleared'); });
+  $('#purgeActivityBtn').addEventListener('click', ()=>{ localStorage.removeItem(ACTIVITY_KEY); renderActivity(); showToast('Activity log cleared'); });
+  $('#clearSearch').addEventListener('click', ()=> { $('#globalSearch').value=''; filterLists(''); });
+  $('#globalSearch').addEventListener('input', ()=> filterLists($('#globalSearch').value.trim()) );
+
+  // backend settings save
+  $('#saveBackendBtn').addEventListener('click', ()=>{
+    BACKEND.binId = $('#jsonbinId').value.trim();
+    BACKEND.masterKey = $('#jsonbinKey').value.trim();
+    if(BACKEND.binId && BACKEND.masterKey) { showToast('Backend settings saved. Writes will use JSONBin.','success'); }
+    else { showToast('Backend not configured — will attempt local PUT + local override.','info'); }
+    // persist to localStorage for next load
+    localStorage.setItem('rlcc_admin_backend', JSON.stringify(BACKEND));
+  });
+
+  // export JSON
+  $('#exportBtn').addEventListener('click', ()=>{
+    const blob = new Blob([JSON.stringify(APP.data, null, 2)], {type:'application/json'});
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a'); a.href = url; a.download = 'admin-data-export.json'; a.click();
+    URL.revokeObjectURL(url);
+  });
+
+  // click handlers for list buttons (edit/delete)
+  document.addEventListener('click', async (ev)=>{
+    const a = ev.target.closest('[data-action]');
+    if(!a) return;
+    const action = a.getAttribute('data-action');
+    const id = a.getAttribute('data-id');
+    if(action === 'edit-sermon'){ const s = (APP.data.sermons||[]).find(x=>x.id===id); if(!s) return showToast('Sermon not found','danger'); $('#sermonId').value=s.id; $('#sermonTitle').value=s.title; $('#sermonPreacher').value=s.preacher; $('#sermonDate').value = s.date ? s.date.split('T')[0] : ''; $('#sermonCategory').value = s.category||'sunday'; $('#sermonYouTubeId').value = s.youtubeId||''; $('#sermonThumb').value = s.thumb||''; $('#sermonDesc').value = s.desc||''; window.scrollTo({top:0,behavior:'smooth'}); }
+    if(action === 'del-sermon'){ if(!confirm('Delete this sermon?')) return; APP.data.sermons = (APP.data.sermons||[]).filter(x=>x.id!==id); await persistData('delete-sermon', {id}); }
+    if(action === 'del-clip'){ if(!confirm('Delete this clip?')) return; APP.data.clips = (APP.data.clips||[]).filter(x=>x.id!==id); await persistData('delete-clip', {id}); }
+    if(action === 'play-clip'){ const clip = (APP.data.clips||[]).find(x=>x.id===id); if(clip && clip.youtubeId) window.open('https://youtube.com/watch?v='+clip.youtubeId,'_blank'); }
+  });
+
+  // filter lists by text
+  function filterLists(q){
+    q = (q||'').toLowerCase();
+    // sermons
+    const sWrap = $('#sermonsList'); sWrap.querySelectorAll('.list-item').forEach(node=>{
+      const text = node.innerText.toLowerCase();
+      node.style.display = text.includes(q)? 'flex' : 'none';
+    });
+    // clips
+    const cWrap = $('#clipsList'); cWrap.querySelectorAll('.list-item').forEach(node=>{
+      const text = node.innerText.toLowerCase();
+      node.style.display = text.includes(q)? 'flex' : 'none';
+    });
+  }
+
+  /***********************
+   Persistence
+  ************************/
+  async function persistData(actionLabel, payload){
+    // update local override immediately
+    try{
+      localStorage.setItem(LOCAL_OVERRIDE_KEY, JSON.stringify(APP.data));
+    }catch(e){ console.warn('Could not set local override', e); }
+    logActivity(actionLabel, payload && payload.youtubeId ? 'video' : (payload && payload.title ? 'item' : 'update'), payload && payload.title ? payload.title : JSON.stringify(payload||{}));
+    renderAll();
+    showToast('Saved locally (override). Attempting remote write...', 'info');
+
+    // If backend configured for JSONBin v3
+    const storedBackend = localStorage.getItem('rlcc_admin_backend');
+    if(storedBackend){
+      try{ const b = JSON.parse(storedBackend); BACKEND = b || BACKEND; }catch(e){}
+    }
+
+    if(BACKEND.binId && BACKEND.masterKey){
+      try{
+        // JSONBin v3 PUT (replace)
+        // Endpoint: https://api.jsonbin.io/v3/b/<BIN_ID>
+        const url = `https://api.jsonbin.io/v3/b/${BACKEND.binId}`;
+        const res = await fetch(url, {
+          method: 'PUT',
+          headers: {
+            'Content-Type': 'application/json',
+            'X-Master-Key': BACKEND.masterKey
+          },
+          body: JSON.stringify(APP.data)
+        });
+        if(!res.ok) throw new Error('JSONBin write failed: '+res.status);
+        showToast('Remote write succeeded (JSONBin).', 'success');
+        return;
+      }catch(e){
+        console.warn('JSONBin write failed', e);
+        showToast('Remote JSONBin write failed. Data saved locally.', 'danger');
+      }
+    }
+
+    // If JSONBin not configured, attempt direct PUT to admin-data.json (only works on server with write endpoint)
+    try{
+      const res = await fetch(DATA_FILE, {
+        method: 'PUT',
+        headers: {'Content-Type': 'application/json'},
+        body: JSON.stringify(APP.data, null, 2)
+      });
+      if(res.ok){
+        showToast('Remote write succeeded (PUT to admin-data.json).', 'success');
+        return;
+      } else {
+        console.warn('PUT to admin-data.json failed', res.status);
+        showToast('PUT to admin-data.json failed (server likely does not allow).', 'danger');
+      }
+    }catch(e){
+      console.warn('PUT to admin-data.json failed', e);
+      showToast('Could not PUT to admin-data.json (server disallowed).', 'danger');
+    }
+
+    // final fallback: give user instructions
+    showToast('Saved locally. To persist server-side, configure JSONBin or server endpoint.', 'info');
+  }
+
+  /***********************
+   Init
+  ************************/
+  (function init(){
+    // Load backend config if present
+    try{
+      const b = JSON.parse(localStorage.getItem('rlcc_admin_backend')||'{}');
+      if(b && b.binId) { BACKEND = b; $('#jsonbinId').value = BACKEND.binId || ''; $('#jsonbinKey').value = BACKEND.masterKey || ''; }
+    }catch(e){}
+
+    // load data
+    loadAdminData();
+
+    // Render activities etc
+    renderActivity();
+
+    // show any override note
+    if(localStorage.getItem(LOCAL_OVERRIDE_KEY)) showToast('Local override is active — remote may differ.', 'info');
+
+    // handle export on unload to ensure sermons.html may see local override
+    window.addEventListener('beforeunload', ()=> {
+      try{ localStorage.setItem(LOCAL_OVERRIDE_KEY, JSON.stringify(APP.data)); }catch(e){}
+    });
+  })();
+
+  </script>
+
+
+
+
+</body>
+</html>

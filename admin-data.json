@@ -1,0 +1,105 @@
+{
+  "site": {
+    "title": "RLCC — Sermons",
+    "subtitle": "Praise & Worship • Live & Recorded",
+    "logo": "https://riversoflovechristiancentre.org/logo.png"
+  },
+  "pinned": {
+    "title": "Sermon of the Week — Faith Over Fear",
+    "preacher": "Pastor Femi Isaiah",
+    "date": "2025-09-14",
+    "desc": "A powerful message about trusting God even when storms come.",
+    "youtubeId": "rZad4Yvmrxc",
+    "thumb": "" 
+  },
+  "clips": [
+    { "id": "c2", "title": "Clip: Pray Always", "youtubeId": "bn2DhgeEsoU", "thumb": "" },
+    { "id": "c1", "title": "Clip: Trust God", "youtubeId": "bn2DhgeEsoU", "thumb": "" },
+    { "id": "c2", "title": "Clip: Pray Always", "youtubeId": "bn2DhgeEsoU", "thumb": "" },
+     { "id": "c1", "title": "Clip: Trust God", "youtubeId": "bn2DhgeEsoU", "thumb": "" }
+  ],
+  "sermons": [
+    {
+      "id": "s1",
+      "title": "Testing",
+      "preacher": "Pastor Femi Isaiah",
+      "date": "2025-09-14",
+      "category": "sunday",
+      "desc": "A powerful message about trusting God even when storms come.",
+      "youtubeId": "rZad4Yvmrxc",
+      "thumb": ""
+    },
+     {
+      "id": "s1",
+      "title": "Faith Over Fear",
+      "preacher": "Pastor Femi Isaiah",
+      "date": "2025-09-14",
+      "category": "sunday",
+      "desc": "A powerful message about trusting God even when storms come.",
+      "youtubeId": "0zVP0jvdaOU",
+      "thumb": ""
+    },
+    
+    {
+      "id": "s2",
+      "title": "The Power of Prayer",
+      "preacher": "Pastor Olorunsogo",
+      "date": "2025-09-07",
+      "category": "midweek",
+      "desc": "How persistent prayer unlocks breakthroughs.",
+      "youtubeId": "zY6v3rG4egQ",
+      "thumb": ""
+    },
+    {
+      "id": "s1",
+      "title": "Faith Over Fear",
+      "preacher": "Pastor Femi Isaiah",
+      "date": "2025-09-14",
+      "category": "sunday",
+      "desc": "A powerful message about trusting God even when storms come.",
+      "youtubeId": "zY6v3rG4egQ",
+      "thumb": ""
+    },
+    {
+      "id": "s1",
+      "title": "Faith Over Fear",
+      "preacher": "Pastor Femi Isaiah",
+      "date": "2025-09-14",
+      "category": "sunday",
+      "desc": "A powerful message about trusting God even when storms come.",
+      "youtubeId": "zY6v3rG4egQ",
+      "thumb": ""
+    },
+     {
+      "id": "s1",
+      "title": "Faith Over Fear",
+      "preacher": "Pastor Femi Isaiah",
+      "date": "2025-09-14",
+      "category": "sunday",
+      "desc": "A powerful message about trusting God even when storms come.",
+      "youtubeId": "zY6v3rG4egQ",
+      "thumb": ""
+    },
+    
+    {
+      "id": "s2",
+      "title": "The Power of Prayer",
+      "preacher": "Pastor Olorunsogo",
+      "date": "2025-09-07",
+      "category": "midweek",
+      "desc": "How persistent prayer unlocks breakthroughs.",
+      "youtubeId": "zY6v3rG4egQ",
+      "thumb": ""
+    },
+    {
+      "id": "s1",
+      "title": "Faith Over Fear",
+      "preacher": "Pastor Femi Isaiah",
+      "date": "2025-09-14",
+      "category": "sunday",
+      "desc": "A powerful message about trusting God even when storms come.",
+      "youtubeId": "zY6v3rG4egQ",
+      "thumb": ""
+    }
+  ]
+}

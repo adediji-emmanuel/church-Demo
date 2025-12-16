@@ -1,0 +1,243 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>RLCC — Sermons</title>
+  <!-- favicon -->
+  <link rel="shortcut icon" href="https://riversoflovechristiancentre.org/logo.png" type="image/x-icon">
+  <!-- Bootstrap CSS -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+  <!-- Font Awesome -->
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" rel="stylesheet">
+  <!-- Google Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="asset/css/sermons.css">
+</head>
+<body>
+
+  
+  
+
+
+
+  <div class="container-app">
+
+
+    
+   
+
+    <!-- HEADER -->
+    <div  class="app-header">
+      <div class="brand">
+        <img style="object-fit: contain;" src="https://riversoflovechristiancentre.org/logo.png" id="brand-logo" alt="logo">
+        <div>
+          <div id="site-title" style="font-weight:700">RLCC — Sermons</div>
+          <div id="site-sub" class="muted small">Praise & Worship • Live & Recorded</div>
+        </div>
+      </div>
+
+      <div class="d-flex align-items-center gap-2">
+        <div class="input-group search-input">
+          <span class="input-group-text bg-transparent border-0" style="color:var(--muted)"><i class="fas fa-search"></i></span>
+          <input id="searchBox" type="search" class="form-control bg-transparent text-white border-0" placeholder="Search sermons, preachers..." aria-label="Search">
+          <button class="btn btn-outline-secondary bg-transparent border-0" id="searchClear" title="Clear"><i class="fas fa-times"></i></button>
+        </div>
+
+        <div class="theme-toggle" id="themeToggle" title="Toggle theme" style="cursor:pointer;padding:6px 8px;border-radius:999px;background:rgba(255,255,255,0.02);border:1px solid rgba(255,255,255,0.03);display:flex;align-items:center;gap:8px;">
+          <i class="fas fa-swatchbook"></i><small class="muted">Theme</small>
+        </div>
+
+        <button style="background: transparent; border: none;" class="control-btn" id="openShareBtn" title="Share"><i class="fas fa-share-alt"></i></button>
+      </div>
+    </div>
+
+    <!-- LAYOUT -->
+    <div class="layout">
+      <!-- LEFT SIDEBAR -->
+      <aside class="left-col">
+        <div class="panel">
+          <div style="display:flex;align-items:center;justify-content:space-between;">
+            <div>
+              <div style="font-weight:700">Navigation</div>
+              <div class="muted small">Quick links</div>
+            </div>
+            <button class="btn btn-sm btn-outline-light" id="openRadioBtn" title="Radio"><a href="index.html" style="text-decoration: none;"><i class="fas fa-broadcast-tower"></i></a></button>
+          </div>
+
+          <hr style="border-top:1px solid rgba(255,255,255,0.03)">
+
+          <nav class="d-flex flex-column gap-2 small">
+            <a class="chip" href="index.html" data-nav="home"><i class="fas fa-home me-2"></i> Home</a>
+            <a class="chip active" href="sermons.html" data-nav="sermons"><i class="fas fa-compact-disc me-2"></i> Sermons</a>
+            <a class="chip" href="#" data-nav="schedule"><i class="fas fa-calendar-alt me-2"></i> Schedule</a>
+            <a class="chip" href="#" data-nav="prayer" id="openPrayerBtn"><i class="fas fa-hands me-2"></i> Prayer Requests</a>
+            <a class="chip" href="#" data-nav="give"><i class="fas fa-hand-holding-heart me-2"></i> Give</a>
+          </nav>
+        </div>
+      </aside>
+
+      <!-- CENTER -->
+      <main class="center-col">
+        <div class="panel player-wrap reveal" id="playerPanel" data-reveal>
+          <div class="player-overlay">
+            <div style="display:flex;align-items:center;gap:8px;"><div class="live-dot"></div><div id="liveText">LIVE</div></div>
+            <div class="muted small ms-2" id="viewerCount">—</div>
+          </div>
+
+          <div class="player-16by9" id="yt-player-wrap">
+            <div id="yt-player" style="width:100%;height:100%"></div>
+            <div class="controls-overlay">
+              <div class="control-btn" id="playPauseBtn"><i class="fas fa-play"></i> <span id="playPauseText" class="small ms-1">Play</span></div>
+              <div class="control-btn" id="muteBtn"><i class="fas fa-volume-up"></i></div>
+              <div class="vol-slider"><input id="volRange" type="range" min="0" max="100" value="100"></div>
+              <div class="control-btn" id="theaterBtn" title="Toggle theater"><i class="fas fa-expand"></i></div>
+              <div class="control-btn" id="openInYT" title="Open on YouTube"><i class="fab fa-youtube"></i></div>
+            </div>
+          </div>
+
+          <div class="player-meta" style="padding-top:10px;display:flex;justify-content:space-between;align-items:center;">
+            <div>
+              <div id="playerTitle" style="font-weight:700">RLCC Live Stream</div>
+              <div id="playerSubtitle" class="muted small">Sermons & Messages</div>
+            </div>
+
+            <div style="display:flex;gap:8px;align-items:center">
+              <button class="btn btn-sm btn-outline-light" id="reminderBtn"><i class="fas fa-bell"></i> Remind Me</button>
+              <button class="btn-accent btn-sm" id="watchFullBtn"><i class="fas fa-play-circle"></i> Watch</button>
+            </div>
+          </div>
+
+          <!-- pinned -->
+          <div class="pinned reveal mt-3" data-reveal style="display:flex;gap:12px;align-items:center;border-radius:12px;padding:12px;background:linear-gradient(90deg, rgba(74,230,110,0.04), rgba(255,255,255,0.01));border:1px solid rgba(255,255,255,0.03);">
+            <div id="pinnedThumb" style="width:150px;height:84px;border-radius:8px;background:#ffffff06"></div>
+            <div style="flex:1">
+              <div id="pinnedTitle" style="font-weight:700">Pinned Title</div>
+              <div id="pinnedMeta" class="muted small">Pastor • Date</div>
+              <div id="pinnedDesc" class="muted small mt-2">Pinned description</div>
+            </div>
+            <div>
+              <button class="btn-accent" id="pinnedWatch"><i class="fas fa-play"></i> Watch</button>
+            </div>
+          </div>
+
+          <div class="chips" id="filterChips" style="margin-top:12px">
+            <div class="chip active" data-filter="all">All</div>
+            <div class="chip" data-filter="sunday">Sunday Service</div>
+            <div class="chip" data-filter="midweek">Midweek</div>
+            <div class="chip" data-filter="youth">Youth Hour</div>
+            <div class="chip" data-filter="events">Special Events</div>
+          </div>
+
+          <div class="clips-row" id="clipsRow"></div>
+        </div>
+
+        <div class="reveal panel mt-3" data-reveal>
+          <div style="display:flex;justify-content:space-between;align-items:center;">
+            <div style="font-weight:700">Latest Sermons</div>
+            <div class="muted small">Tap a card to open details</div>
+          </div>
+
+          <div class="sermon-grid" id="sermonGrid"></div>
+
+          <div class="d-flex justify-content-center mt-3">
+            <button class="btn btn-outline-light" id="loadMore">Load more</button>
+          </div>
+        </div>
+      </main>
+
+      <!-- RIGHT -->
+      <aside class="right-col">
+        <div class="panel right-widget reveal" data-reveal>
+          <div style="display:flex;justify-content:space-between;align-items:center;">
+            <div><div style="font-weight:700">Upcoming Stream</div><div class="muted small">Next</div></div>
+            <div class="muted small" id="nextTime">—</div>
+          </div>
+          <hr style="border-top:1px solid rgba(255,255,255,0.03)">
+          <div style="text-align:center;margin-top:6px;">
+            <div id="countdown" style="font-size:22px;font-weight:700">00:00:00</div>
+            <div class="muted small mt-1">Until next</div>
+            <div class="mt-3"><button class="btn-accent" id="setReminderBtn"><i class="fas fa-bell"></i> Set Reminder</button></div>
+          </div>
+        </div>
+
+        <div class="panel right-widget reveal" data-reveal>
+          <div style="display:flex;justify-content:space-between;align-items:center;">
+            <div><div style="font-weight:700">Prayer Requests</div><div class="muted small">Submit for private prayer</div></div>
+            <button class="btn btn-sm btn-outline-light" id="openPrayer"><i class="fas fa-plus"></i></button>
+          </div>
+
+          <!-- NEW: input box appears in the center when + is pressed -->
+          <div id="prayerContainer" style="margin-top:12px;">
+            <div id="prayerBox" style="height:88px;background:#ffffff04;border-radius:8px;display:flex;align-items:center;justify-content:center">
+              <div class="muted small">No open requests</div>
+            </div>
+
+            <div class="prayer-input-wrap" id="prayerInputWrap" style="margin-top:10px;">
+              <input id="prayerInput" type="text" class="form-control bg-transparent text-white" placeholder="Type your prayer request here...">
+              <div style="display:flex;gap:8px;margin-top:8px;justify-content:flex-end">
+                <button class="btn btn-outline-light" id="prayerCancel">Cancel</button>
+                <button class="btn-accent" id="prayerSend">Send</button>
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </aside>
+    </div>
+  </div>
+
+  <!-- MOBILE BOTTOM NAV -->
+  <div class="mobile-bottom-nav">
+    <div class="text-center" id="mb-home"><i class="fas fa-home"></i><div class="muted small">Home</div></div>
+    <div class="text-center" id="mb-sermons"><i class="fas fa-compact-disc"></i><div class="muted small">Sermons</div></div>
+    <div class="text-center" id="mb-schedule"><i class="fas fa-calendar-alt"></i><div class="muted small">Schedule</div></div>
+    <div class="text-center" id="mb-prayer"><i class="fas fa-hands"></i><div class="muted small">Prayer</div></div>
+    <div class="text-center" id="mb-more"><i class="fas fa-ellipsis-h"></i><div class="muted small">More</div></div>
+  </div>
+
+  <!-- SERMON / CLIP MODAL -->
+  <div class="modal fade" id="sermonModal" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-lg modal-dialog-centered">
+      <div class="modal-content" style="background:rgba(0,0,0,0.7); color:#fff; border:1px solid rgba(255,255,255,0.03);">
+        <div class="modal-header">
+          <h5 class="modal-title" id="sermonModalTitle">Sermon Title</h5>
+          <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <div id="modalPlayerWrap" style="width:100%;aspect-ratio:16/9;background:#000;border-radius:8px;overflow:hidden"></div>
+          <div style="margin-top:12px;"><div id="sermonMeta" class="muted small"></div><p id="sermonDesc" style="margin-top:8px"></p></div>
+        </div>
+        <div class="modal-footer">
+          <button class="btn btn-outline-light" data-bs-dismiss="modal">Close</button>
+          <button class="btn-accent" id="modalWatchBtn"><i class="fas fa-play"></i> Watch on main player</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- SHARE MODAL -->
+  <div class="modal fade" id="shareModal" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-sm modal-dialog-centered">
+      <div class="modal-content">
+        <div class="modal-header"><h5 class="modal-title">Share RLCC Sermons</h5><button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button></div>
+        <div class="modal-body">
+          <input id="shareInput" class="form-control bg-transparent text-white small" value="https://riversoflovechristiancentre/sermons" readonly>
+          <div class="mt-2 d-flex gap-2">
+            <button class="btn btn-accent" id="shareWhatsapp"><i class="fab fa-whatsapp"></i></button>
+            <button class="btn btn-outline-light" id="shareTwitter"><i class="fab fa-twitter"></i></button>
+            <button class="btn btn-outline-light" id="shareCopy"><i class="fas fa-copy"></i> Copy</button>
+          </div>
+          <div class="mt-3" id="shareQRPreview"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+  <!-- Bootstrap + YouTube IFrame API -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+  <script src="https://www.youtube.com/iframe_api"></script>
+  <script src="asset/js/sermon.js"></script>
+</body>
+</html>
