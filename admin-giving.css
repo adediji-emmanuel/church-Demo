@@ -1,0 +1,43 @@
+body.admin-body {
+  font-family: 'Segoe UI', sans-serif;
+  background: #f7f7f7;
+  color: #111;
+}
+
+.admin-header {
+  background: #000;
+  color: #fff;
+  border-bottom-left-radius: 15px;
+  border-bottom-right-radius: 15px;
+}
+
+.admin-logo {
+  width: 45px;
+}
+
+.admin-card {
+  background: #fff;
+  border-radius: 15px;
+  padding: 15px;
+  box-shadow: 0 4px 15px rgba(0,0,0,0.08);
+}
+
+.admin-card h6 {
+  font-weight: 600;
+  font-size: 0.85rem;
+  color: #555;
+}
+
+.admin-card h5 {
+  font-size: 1.3rem;
+  margin-top: 8px;
+}
+
+#recentTransactions {
+  max-height: 180px;
+  overflow-y: auto;
+}
+
+canvas {
+  max-height: 200px;
+}

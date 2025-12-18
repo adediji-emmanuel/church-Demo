@@ -1,0 +1,234 @@
+/* =========================
+   ROOT & GLOBAL STYLES
+========================= */
+
+:root {
+  --primary: #000000;
+  --secondary: #ffffff;
+  --accent: #c9a14a;
+  --bg-light: #f7f7f7;
+  --bg-dark: #0d0d0d;
+  --text-light: #ffffff;
+  --text-dark: #111111;
+}
+
+body.give-body {
+  background: var(--bg-light);
+  font-family: 'Segoe UI', system-ui, sans-serif;
+  color: var(--text-dark);
+  padding-bottom: 90px; /* space for fixed button */
+  transition: background 0.3s, color 0.3s;
+}
+
+/* =========================
+   HERO SECTION
+========================= */
+
+.give-hero {
+  background: linear-gradient(135deg, #000000, #1a1a1a);
+  color: var(--text-light);
+  padding: 40px 20px 30px;
+  border-bottom-left-radius: 30px;
+  border-bottom-right-radius: 30px;
+  box-shadow: 0 8px 25px rgba(0,0,0,0.4);
+}
+
+.church-logo {
+  width: 85px;
+  height: auto;
+}
+
+.give-hero h1 {
+  font-weight: 600;
+  margin-top: 15px;
+}
+
+.give-hero p {
+  opacity: 0.85;
+  font-style: italic;
+  font-size: 0.95rem;
+}
+
+/* =========================
+   CONTAINER
+========================= */
+
+.give-container {
+  margin-top: 25px;
+}
+
+/* =========================
+   SECTION TITLES
+========================= */
+
+.section-title {
+  font-size: 0.85rem;
+  font-weight: 600;
+  margin-bottom: 10px;
+  color: #555;
+  text-transform: uppercase;
+}
+
+/* =========================
+   GIVING TYPE CARDS
+========================= */
+
+.giving-types {
+  display: flex;
+  gap: 12px;
+  overflow-x: auto;
+  padding-bottom: 10px;
+}
+
+.give-card {
+  min-width: 110px;
+  background: var(--secondary);
+  border-radius: 18px;
+  padding: 14px 10px;
+  text-align: center;
+  box-shadow: 0 4px 15px rgba(0,0,0,0.08);
+  cursor: pointer;
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.give-card i {
+  font-size: 1.4rem;
+  display: block;
+  margin-bottom: 6px;
+}
+
+.give-card span {
+  font-size: 0.9rem;
+  font-weight: 500;
+}
+
+.give-card.active {
+  border: 2px solid var(--accent);
+  transform: scale(1.05);
+}
+
+/* =========================
+   AMOUNT BUTTONS
+========================= */
+
+.amount-buttons {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 10px;
+}
+
+.amt-btn {
+  border: 1px solid #ddd;
+  background: #fff;
+  border-radius: 12px;
+  padding: 8px;
+  font-size: 0.85rem;
+  transition: background 0.2s, transform 0.1s;
+}
+
+.amt-btn:active {
+  transform: scale(0.95);
+  background: #eee;
+}
+
+/* =========================
+   FAITH TEXT
+========================= */
+
+.faith-text {
+  display: block;
+  margin-top: 6px;
+  font-size: 0.75rem;
+  color: #777;
+}
+
+/* =========================
+   FREQUENCY BUTTONS
+========================= */
+
+.frequency {
+  display: flex;
+  gap: 12px;
+}
+
+.freq-btn {
+  flex: 1;
+  border-radius: 14px;
+  border: 1px solid #ddd;
+  padding: 10px;
+  background: #fff;
+  font-size: 0.9rem;
+}
+
+.freq-btn.active {
+  background: var(--primary);
+  color: var(--text-light);
+}
+
+/* =========================
+   INPUTS
+========================= */
+
+input.form-control,
+textarea.form-control {
+  border-radius: 14px;
+  font-size: 0.9rem;
+}
+
+/* =========================
+   FIXED GIVE BUTTON
+========================= */
+
+.give-btn {
+  position: fixed;
+  bottom: 15px;
+  left: 15px;
+  right: 15px;
+  background: var(--primary);
+  color: var(--text-light);
+  border: none;
+  padding: 16px;
+  font-size: 1rem;
+  border-radius: 18px;
+  box-shadow: 0 8px 25px rgba(0,0,0,0.4);
+  z-index: 1000;
+}
+
+.give-btn:active {
+  transform: scale(0.98);
+}
+
+/* =========================
+   THANK YOU MODAL
+========================= */
+
+.thank-modal {
+  background: var(--bg-dark);
+  color: var(--text-light);
+  border-radius: 20px;
+}
+
+/* =========================
+   DARK MODE (AUTO AT NIGHT)
+========================= */
+
+@media (prefers-color-scheme: dark) {
+  body.give-body {
+    background: var(--bg-dark);
+    color: var(--text-light);
+  }
+
+  .give-card,
+  .amt-btn,
+  .freq-btn,
+  input.form-control,
+  textarea.form-control {
+    background: #1a1a1a;
+    color: #fff;
+    border-color: #333;
+  }
+
+  .section-title {
+    color: #aaa;
+  }
+}

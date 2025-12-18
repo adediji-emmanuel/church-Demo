@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Give | Rivers of Love Christian Centre</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <!-- Bootstrap -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+
+  <!-- Bootstrap Icons -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css" rel="stylesheet">
+
+  <!-- Custom CSS -->
+  <link rel="stylesheet" href="give.css">
+
+  <!-- Paystack -->
+  <script src="https://js.paystack.co/v1/inline.js"></script>
+</head>
+<body class="give-body">
+
+<!-- ================= HERO ================= -->
+<section class="give-hero text-center">
+  <img src="https://riversoflovechristiancentre.org/logo.png" class="church-logo" alt="RLCC Logo">
+  <h1>Give</h1>
+  <p id="verseText">“Give, and it shall be given unto you.”</p>
+</section>
+
+<!-- ================= MAIN FORM ================= -->
+<main class="container give-container">
+
+  <!-- Giving Type -->
+  <h6 class="section-title">Giving Type</h6>
+  <div class="giving-types">
+    <div class="give-card active" data-type="Tithe">
+      <i class="bi bi-wallet2"></i>
+      <span>Tithe</span>
+    </div>
+    <div class="give-card" data-type="Offering">
+      <i class="bi bi-gift"></i>
+      <span>Offering</span>
+    </div>
+    <div class="give-card" data-type="Seed">
+      <i class="bi bi-heart"></i>
+      <span>Seed</span>
+    </div>
+    <div class="give-card" data-type="Project">
+      <i class="bi bi-building"></i>
+      <span>Project</span>
+    </div>
+  </div>
+
+  <!-- Amount -->
+  <h6 class="section-title mt-4">Amount (₦)</h6>
+  <div class="amount-buttons">
+    <button class="amt-btn" data-amt="1000">₦1,000</button>
+    <button class="amt-btn" data-amt="5000">₦5,000</button>
+    <button class="amt-btn" data-amt="10000">₦10,000</button>
+    <button class="amt-btn" data-amt="20000">₦20,000</button>
+  </div>
+
+  <input type="number" id="amount" class="form-control mt-2" placeholder="Enter amount">
+
+  <small class="faith-text">Many members give ₦10,000 this month</small>
+
+  <!-- Donor Info -->
+  <h6 class="section-title mt-4">Your Details</h6>
+  <input type="text" id="name" class="form-control mb-2" placeholder="Full Name">
+  <input type="email" id="email" class="form-control mb-2" placeholder="Email (for receipt)">
+  <input type="tel" id="phone" class="form-control mb-2" placeholder="Phone (optional)">
+
+  <div class="form-check mt-2">
+    <input class="form-check-input" type="checkbox" id="anonymous">
+    <label class="form-check-label">Give anonymously</label>
+  </div>
+
+  <!-- Recurring -->
+  <h6 class="section-title mt-4">Giving Frequency</h6>
+  <div class="frequency">
+    <button class="freq-btn active" data-value="once">One-time</button>
+    <button class="freq-btn" data-value="monthly">Monthly</button>
+  </div>
+
+  <!-- Prayer Request -->
+  <h6 class="section-title mt-4">Prayer Request (Optional)</h6>
+  <textarea id="prayer" class="form-control" rows="3" placeholder="Write your prayer request"></textarea>
+
+</main>
+
+<!-- ================= GIVE BUTTON ================= -->
+<button id="giveBtn" class="give-btn">
+  <i class="bi bi-lock"></i> Give Securely
+</button>
+
+<!-- ================= THANK YOU MODAL ================= -->
+<div class="modal fade" id="thankYouModal" tabindex="-1">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content thank-modal">
+      <div class="modal-body text-center">
+        <h4>Thank You 🙏</h4>
+        <p>Your giving has been received.</p>
+        <p class="small text-muted">God bless you.</p>
+        <button class="btn btn-dark w-100 mt-3" data-bs-dismiss="modal">Close</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Bootstrap JS -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+
+<!-- Custom JS -->
+<script src="give.js"></script>
+
+</body>
+</html>
