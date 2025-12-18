@@ -2,8 +2,8 @@
 // FETCH DATA FROM JSONBIN
 // =======================
 async function fetchGivingData() {
-  const binID = 'YOUR_JSONBIN_BIN_ID';
-  const masterKey = 'YOUR_JSONBIN_MASTER_KEY';
+  const binID = '6942c72f43b1c97be9f4b13d';
+  const masterKey = '$2a$10$qtoZhFMZ4JANryBb2s7LpOrnC2KpW0MIGpSvWVJxp1t7ta94N9SSO';
   const url = `https://api.jsonbin.io/v3/b/${binID}/latest`;
 
   const res = await fetch(url, {
